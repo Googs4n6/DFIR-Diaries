@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/DFIR-Diaries/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/</loc>
     <lastmod>2023-12-20T11:26:06+10:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/DFIR-Diaries/posts/post-extract-processing/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/posts/post-extract-processing/</loc>
     <lastmod>2023-12-20T11:26:06+10:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/DFIR-Diaries/posts/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/posts/</loc>
     <lastmod>2023-12-20T11:26:06+10:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/DFIR-Diaries/posts/acquiring-an-encrypted-virtual-machine-disk-image/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/posts/acquiring-an-encrypted-virtual-machine-disk-image/</loc>
     <lastmod>2023-10-16T13:58:06+10:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/DFIR-Diaries/categories/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/DFIR-Diaries/tags/</loc>
+    <loc>https://googs4n6.github.io/DFIR-Diaries/tags/</loc>
   </url>
 </urlset>
