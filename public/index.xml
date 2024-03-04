@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DFIR Diaries</title>
+    <link>http://localhost:1313/DFIR-Diaries/</link>
+    <description>Recent content on DFIR Diaries</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 Dec 2023 11:26:06 +1030</lastBuildDate>
+    <atom:link href="http://localhost:1313/DFIR-Diaries/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Post-Extract Processing</title>
+      <link>http://localhost:1313/DFIR-Diaries/posts/post-extract-processing/</link>
+      <pubDate>Wed, 20 Dec 2023 11:26:06 +1030</pubDate>
+      <guid>http://localhost:1313/DFIR-Diaries/posts/post-extract-processing/</guid>
+      <description>Post-Extract Processing Recently, I have experienced many crashes and slowdowns when using Cellebrite Reader. This is more than likely due to some of the enormous sizes of UFDR reports that I am generating. Every time that a UFDR report is opened, Cellebrite Reader has to load the UFDR report and process it. Cellebrite PA (Physical Analyzer) does perform some file compression when packing it into a UFDR report. Although, this greatly outweighs the recoupment of space as there is a large amount of data that has to be packed regardless.</description>
+    </item>
+    <item>
+      <title>Acquiring an Encrypted Virtual Machine Disk Image</title>
+      <link>http://localhost:1313/DFIR-Diaries/posts/acquiring-an-encrypted-virtual-machine-disk-image/</link>
+      <pubDate>Mon, 16 Oct 2023 13:58:06 +1030</pubDate>
+      <guid>http://localhost:1313/DFIR-Diaries/posts/acquiring-an-encrypted-virtual-machine-disk-image/</guid>
+      <description>Acquiring an Encrypted Virtual Machine Disk Image Example Case:&#xA;The exhibit in this instance had ORACLE VirtualBox installed and was actively using a Windows 7 VM (Virtual Machine) to acquire and download illicit material. The VM had a single encrypted disk that was encrypted through VirtualBox&amp;rsquo;s Full Disk Encryption. A password was provided for the encrypted disk. There is possibility to decrypt the Disk Image through Hashcat if required.&#xA;MAGNET AXIOM supports importing VM disk images, although only in a decrypted state.</description>
+    </item>
+  </channel>
+</rss>

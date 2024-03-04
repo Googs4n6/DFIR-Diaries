@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/DFIR-Diaries/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=DFIR-Diaries/livereload" data-no-instant defer></script>
+    <title>
+Post-Extract Processing | Googs4n6 DFIR Blog
+</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+
+<meta name="generator" content="Hugo 0.123.7">
+
+
+<link rel="canonical" href="http://localhost:1313/DFIR-Diaries/posts/post-extract-processing/" >
+
+
+
+
+<link href="/DFIR-Diaries/css/style.min.d23c1980faa61c0d6b331a0cd9dbc34fb7dade9e294067f1108fb8f26bd7796c.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <div class="flexWrapper">
+        <header class="headerWrapper">
+    <div class="header">
+        <div>
+            <a class="terminal" href="http://localhost:1313/DFIR-Diaries/">
+                <span>hello_world@googs4n6 ~ $</span>
+            </a>
+        </div>
+        <input class="side-menu" type="checkbox" id="side-menu">
+        <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+        <nav class="headerLinks">
+            <ul>
+                
+                <li>
+                    <a href="https://googs4n6.github.io/DFIR-Diaries" title="" >
+                        ~/about</a>
+                </li>
+                
+                <li>
+                    <a href="https://googs4n6.github.io/DFIR-Diaries/posts" title="" >
+                        ~/blog</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <main class="main">
+                
+<div class="postWrapper">
+    <h1>Post-Extract Processing</h1>
+    
+    
+    <section class="postMetadata">
+        <dl>
+            
+            
+            
+            
+                <dt>published</dt>
+                
+                <dd><time datetime="2023-12-20">December 20, 2023</time></dd>
+            
+            
+                <dt>reading time</dt>
+                <dd>2 minutes</dd>
+            
+        </dl>
+    </section>
+    
+    <div>
+        <h1 id="post-extract-processing">Post-Extract Processing</h1>
+<p>Recently, I have experienced many crashes and slowdowns when using Cellebrite Reader. This is more than likely due to some of the enormous sizes of UFDR reports that I am generating. Every time that a UFDR report is opened, Cellebrite Reader has to load the UFDR report and process it.
+Cellebrite PA (Physical Analyzer) does perform some file compression when packing it into a UFDR report. Although, this greatly outweighs the recoupment of space as there is a large amount of data that has to be packed regardless.</p>
+<p>Before processing a phone extraction into a UFDR report, Cellebrite PA queries the user to select what to include / exclude from the UFDR report.
+The “Data Types” that Cellebrite PA identifies are some of the following:</p>
+<p><img src="images/1.png" alt="Image alt"></p>
+<p>By opening the .ufdr file that is genereated when creating a Cellebrite Reader report from Cellebrite PA, we can see the files that PA has packed into the report. These files are the original files that were extracted from the phone at the time of acquisition. Cellebrite Reader calls these files and loads them at the time of opening the UFDR report.</p>
+<p><img src="images/2.png" alt="Image alt"></p>
+<p>As applications for mobile devices, ‘.apk’ and ‘.ipa’ are binary files and have already been compressed / processed during code compilation, they are difficult to compress further.</p>
+<p>Cellebrite Reader displays these Applications separately to the “Application List” which is a list of applications that was installed on the phone.</p>
+<p>There is no discernible difference to reviewers or to the Case Officer when generating reports.
+An application list is still generated and ingested into the UFDR report, although the actual Application binaries are not.
+After testing, I have identified the following UFDR report size differences:</p>
+<p><img src="images/3.png" alt="Image alt">
+<img src="images/4.png" alt="Image alt"></p>
+<p>After testing with a range of test phones extractions, I have been able to successfully remove large amounts of data and create smaller UFDR reports. By utilising this method, I have seen savings upwards of <strong>80+ GB</strong>.</p>
+<p>The extreme sizes in applications can more or less be related to software vendors including more apps and bloatware at the time of purchase for these mobile devices. It has been stated that SAMSUNG with their Galaxy S23 explodes the 128gb storage with up to 50gb of stock applications.
+Processing times are incredibly different, the above acquisitions took 30 minutes and 5 minutes respectively. The time recorded was done on a test phone.</p>
+<p>Moving forward I will be generating UFDR reports without the &ldquo;Applications&rdquo; selected, this results in smaller file size, fast loading times and less prone to crashing.</p>
+
+    </div>
+</div>
+
+            </main>
+        </div>
+
+
+        <footer class="footer">
+    
+        <span>
+            © 2024 Googs4n6 DFIR Blog, Built with
+            <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+            <a href="https://github.com/LordMathis/hugo-theme-nightfall" class="footerLink">Nightfall</a> theme
+        </span>
+    
+</footer>
+    </div>
+
+</body>
+
+</html>

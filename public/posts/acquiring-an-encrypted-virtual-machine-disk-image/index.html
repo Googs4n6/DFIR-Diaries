@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/DFIR-Diaries/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=DFIR-Diaries/livereload" data-no-instant defer></script>
+    <title>
+Acquiring an Encrypted Virtual Machine Disk Image | Googs4n6 DFIR Blog
+</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+
+<meta name="generator" content="Hugo 0.123.7">
+
+
+<link rel="canonical" href="http://localhost:1313/DFIR-Diaries/posts/acquiring-an-encrypted-virtual-machine-disk-image/" >
+
+
+
+
+<link href="/DFIR-Diaries/css/style.min.d23c1980faa61c0d6b331a0cd9dbc34fb7dade9e294067f1108fb8f26bd7796c.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <div class="flexWrapper">
+        <header class="headerWrapper">
+    <div class="header">
+        <div>
+            <a class="terminal" href="http://localhost:1313/DFIR-Diaries/">
+                <span>hello_world@googs4n6 ~ $</span>
+            </a>
+        </div>
+        <input class="side-menu" type="checkbox" id="side-menu">
+        <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+        <nav class="headerLinks">
+            <ul>
+                
+                <li>
+                    <a href="https://googs4n6.github.io/DFIR-Diaries" title="" >
+                        ~/about</a>
+                </li>
+                
+                <li>
+                    <a href="https://googs4n6.github.io/DFIR-Diaries/posts" title="" >
+                        ~/blog</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <main class="main">
+                
+<div class="postWrapper">
+    <h1>Acquiring an Encrypted Virtual Machine Disk Image</h1>
+    
+    
+    <section class="postMetadata">
+        <dl>
+            
+            
+            
+            
+                <dt>published</dt>
+                
+                <dd><time datetime="2023-10-16">October 16, 2023</time></dd>
+            
+            
+                <dt>reading time</dt>
+                <dd>4 minutes</dd>
+            
+        </dl>
+    </section>
+    
+    <div>
+        <h1 id="acquiring-an-encrypted-virtual-machine-disk-image">Acquiring an Encrypted Virtual Machine Disk Image</h1>
+<p><strong>Example Case:</strong></p>
+<p>The exhibit in this instance had ORACLE VirtualBox installed and was actively using a Windows 7 VM (Virtual Machine) to acquire and download illicit material. The VM had a single encrypted disk that was encrypted through VirtualBox&rsquo;s Full Disk Encryption. <!-- raw HTML omitted -->A password was provided for the encrypted disk<!-- raw HTML omitted -->. There is possibility to decrypt the Disk Image through Hashcat if required.</p>
+<p>MAGNET AXIOM supports importing VM disk images, although only in a decrypted state. If you are certain that the data at rest is in a decrypted state, you can verify and open its contents by exporting the VM Disk Image file from your acquisition.</p>
+<p>GetData Forensic Explorer will happily take the following VM Disk Image filetypes and display a directory structure:</p>
+<ul>
+<li>Virtual Disk Image (.vdi)</li>
+<li>Virtual Hard Disk (.vhd, .vhdx)</li>
+<li>VMWare (.vmdk)</li>
+</ul>
+<p>If that is the case, you can load the VM Disk Image into MAGNET AXIOM as the correct operating system and it will happily take the Disk Image like a traditional E01, AFF4, etc.</p>
+<p>If Forensic Explorer does not return a directory structure and displays encrypted data, then this guide is for you!</p>
+<h2 id="how-do-encrypted-virtual-machine-disks-work">How do encrypted Virtual Machine disks work?</h2>
+<p>A Virtual Machine itself cannot be encrypted but the attached storages can. A Virtual Machine can have (theoretically) an infinite number of attached drives. Encryption can be set on a per-disk basis. The encryption key for the Virtual Machine disk is not found within the disk itself but actually within the configuration of the Virtual Machine.</p>
+<p><img src="images/1.png" alt="Image alt"></p>
+<p><!-- raw HTML omitted -->You need the configuration to decrypt the Virtual Machine Disk Image. Without it there is no way to recover its contents.<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->What do we have to do?<!-- raw HTML omitted --></p>
+<p>Requirements:</p>
+<ul>
+<li>ORACLE VirtualBox</li>
+<li>SUMURI Paladin</li>
+<li>External USB HDD (of the same or greater storage space than the encrypted VM Disk Image)</li>
+</ul>
+<p>Essentially, what we need to do in order to acquire the data is:</p>
+<ol>
+<li>Import the Virtual Machine</li>
+<li>Verify that the encrypted Virtual Machine Disk Image is attached.</li>
+<li>Attach Paladin as CD/DVD drive</li>
+<li>Attach an External USB HDD as a passthrough USB drive (This can be done after the VM has booted)</li>
+<li>Boot the VM and input the encrypted VM Disk Image password</li>
+<li>Boot into Paladin</li>
+<li>Image the decrypted VM Disk Image to your External USB HDD.</li>
+</ol>
+<p>The reason we image to an External USB HDD is because we want to keep a gap between the VM and network, you wouldn&rsquo;t plug in an exhibit to the network. Also, its much easier to setup USB passthrough than connecting to a SAMBA share (DATA Stores).</p>
+<h2 id="how-do-we-get-the-data">How do we get the data?</h2>
+<p>First, lets organise our files. I have put our Encrypted Disk Image and Paladin into the same folder. This doesn&rsquo;t really matter but pulling the files locally will speed up loading and acquisition speeds.</p>
+<p><img src="images/2.png" alt="Image alt"></p>
+<p>Then, open VirtualBox and add the Virtual Machine. Select &ldquo;<strong>Add</strong>&rdquo; to begin adding the Virtual Machine.</p>
+<p>Navigate to the <strong>.vbox</strong> configuration file which details the disks that are attached to this Virtual Machine. In this example, there is only 1 Encrypted Virtual Machine Disk Image titled &ldquo;<strong>Test.vdi</strong>&rdquo;.</p>
+<p><img src="images/3.png" alt="Image alt"></p>
+<p>The Virtual Machine should auto-populate in the list of Virtual Machines in VirtualBox.</p>
+<p>Before we start the Virtual Machine, let&rsquo;s do some quick changes in the &ldquo;<strong>Settings</strong>&rdquo; (2).</p>
+<p>First, navigate to the &ldquo;<strong>System</strong>&rdquo; settings (3). Then, change the &ldquo;<strong>Boot Order</strong>&rdquo; so that &ldquo;<strong>Optical</strong>&rdquo; is at the top of the list and move the other bootable options to the bottom (4). You can also deactivate, as shown in the photo. This means that the first disk to boot is the Paladin ISO.</p>
+<p><img src="images/4.png" alt="Image alt"></p>
+<p>Now we need to attach the Paladin ISO to the Virtual Machine.</p>
+<p>First, select &ldquo;<strong>Storage</strong>&rdquo; under the &ldquo;<strong>Settings&rdquo;</strong> of the Virtual Machine (2). Next, click &ldquo;<strong>Add Optical Drive</strong>&rdquo; (3). Now &ldquo;<strong>Add</strong>&rdquo; the Paladin ISO to the Virtual Machine (5). Finish your configuration with &ldquo;<strong>Choose</strong>&rdquo;.</p>
+<p><img src="images/5.png" alt="Image alt"></p>
+<p>You may also need to change the &ldquo;<strong>SATA Drive Attributes</strong>&rdquo; so that the Paladin ISO is in &ldquo;<strong>SATA Port 0</strong>&rdquo;. In the above picture, &ldquo;<strong>VBoxGuestAdditions.iso</strong>&rdquo; is at the top of the list, meaning this is the first disk to boot to once detected.</p>
+<p>Now, &ldquo;<strong>Start</strong>&rdquo; the Virtual Machine. Here is where you will be prompted for the Disk Password.</p>
+<p><img src="images/6.png" alt="Image alt"></p>
+<p>Hopefully you should&rsquo;ve now booted into Paladin&rsquo;s home screen.</p>
+<p><img src="images/7.png" alt="Image alt"></p>
+<p>Before we image the (now) Decrypted Disk Image, we need to add a destination disk for the image to be saved too.</p>
+<p>At the top of the Virtual Machine, navigate to &ldquo;<strong>Devices</strong>&rdquo; and add your External USB HDD.</p>
+<p>Note: Paladin may require your External USB HDD to be formatted as exFAT.</p>
+<p><img src="images/8.png" alt="Image alt"></p>
+<p><strong>If your External USB HDD has been detected, you should then be able to image away!</strong></p>
+<p><img src="images/9.png" alt="Image alt"></p>
+
+    </div>
+</div>
+
+            </main>
+        </div>
+
+
+        <footer class="footer">
+    
+        <span>
+            © 2024 Googs4n6 DFIR Blog, Built with
+            <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+            <a href="https://github.com/LordMathis/hugo-theme-nightfall" class="footerLink">Nightfall</a> theme
+        </span>
+    
+</footer>
+    </div>
+
+</body>
+
+</html>
